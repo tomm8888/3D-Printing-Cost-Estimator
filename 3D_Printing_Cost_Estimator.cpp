@@ -8,9 +8,11 @@ int main() {
     string material, quality;
     double weight, infill, printHours;
     double materialPricePerKg;
+    double qualityRate;
 
     cout << "=== 3D PRINTING COST ESTIMATOR ===\n";
 
+    // Material
     cout << "Material (PLA/PETG/ABS): ";
     cin >> material;
 
@@ -28,6 +30,7 @@ int main() {
         return 1;
     }
 
+    // Weight
     cout << "Filament weight (grams): ";
     cin >> weight;
 
@@ -36,6 +39,7 @@ int main() {
         return 1;
     }
 
+    // Infill
     cout << "Infill percentage (0-100): ";
     cin >> infill;
 
@@ -44,6 +48,7 @@ int main() {
         return 1;
     }
 
+    // Print time
     cout << "Print time (hours): ";
     cin >> printHours;
 
@@ -52,12 +57,11 @@ int main() {
         return 1;
     }
 
+    // Quality
     cout << "Quality (Draft/Standard/High): ";
     cin >> quality;
 
     transform(quality.begin(), quality.end(), quality.begin(), ::toupper);
-
-    double qualityRate;
 
     if (quality == "DRAFT")
         qualityRate = 0.50;
@@ -70,30 +74,55 @@ int main() {
         return 1;
     }
 
+    // --------------------------------
+    // COST CALCULATIONS
+    // --------------------------------
+
     // Material cost
     double materialCost = (weight / 1000.0) * materialPricePerKg;
 
-    // Electricity estimate: 0.12 kW average printer power
-    // Electricity rate used for the classroom estimator: RM0.57/kWh.
+    // Electricity cost
+    // Average printer power = 0.12 kW
+    // Electricity rate = RM0.57/kWh
     double electricityCost = 0.12 * printHours * 0.57;
 
-    // Small machine/maintenance allowance, adjusted by quality.
+    // Machine / maintenance cost
     double machineCost = 0.50 * printHours * qualityRate;
 
-    // Infill adjustment: higher infill generally consumes more material.
-    double infillFactor = 0.50 + (infill / 100.0);
+    // Infill adjustment
+    double infillFactor;
+
+    if (infill <= 20)
+        infillFactor = 0.50;
+    else if (infill <= 50)
+        infillFactor = 0.75;
+    else
+        infillFactor = 1.00;
+
     double adjustedMaterialCost = materialCost * infillFactor;
 
-    double totalCost = adjustedMaterialCost + electricityCost + machineCost;
+    // Total cost
+    double totalCost = adjustedMaterialCost
+                     + electricityCost
+                     + machineCost;
+
+    // --------------------------------
+    // OUTPUT
+    // --------------------------------
 
     cout << fixed << setprecision(2);
 
     cout << "\n--- ESTIMATE ---\n";
     cout << "Material: " << material << "\n";
+    cout << "Weight: " << weight << " g\n";
+    cout << "Infill: " << infill << "%\n";
+    cout << "Print time: " << printHours << " hours\n";
     cout << "Quality: " << quality << "\n";
-    cout << "Material cost: RM " << adjustedMaterialCost << "\n";
+
+    cout << "\nMaterial cost: RM " << adjustedMaterialCost << "\n";
     cout << "Electricity cost: RM " << electricityCost << "\n";
     cout << "Machine allowance: RM " << machineCost << "\n";
+
     cout << "Estimated total: RM " << totalCost << "\n";
 
     return 0;
