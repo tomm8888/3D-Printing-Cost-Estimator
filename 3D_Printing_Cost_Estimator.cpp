@@ -23,18 +23,33 @@ int main() {
     else if (material == "ABS")
         materialPricePerKg = 80.0;
     else {
-        cout << "Invalid material.\n";
+        cout << "Invalid material. Please choose PLA, PETG, or ABS.\n";
         return 1;
     }
 
     cout << "Filament weight (grams): ";
     cin >> weight;
 
+    if (weight <= 0) {
+        cout << "Weight must be greater than 0.\n";
+        return 1;
+    }
+
     cout << "Infill percentage (0-100): ";
     cin >> infill;
 
+    if (infill < 0 || infill > 100) {
+        cout << "Infill must be between 0 and 100.\n";
+        return 1;
+    }
+
     cout << "Print time (hours): ";
     cin >> printHours;
+
+    if (printHours <= 0) {
+        cout << "Print time must be greater than 0.\n";
+        return 1;
+    }
 
     cout << "Quality (Draft/Standard/High): ";
     cin >> quality;
@@ -50,7 +65,7 @@ int main() {
     else if (quality == "HIGH")
         qualityRate = 1.50;
     else {
-        cout << "Invalid quality.\n";
+        cout << "Invalid quality. Choose Draft, Standard, or High.\n";
         return 1;
     }
 
