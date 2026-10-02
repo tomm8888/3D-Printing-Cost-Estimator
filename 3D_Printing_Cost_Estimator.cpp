@@ -83,11 +83,27 @@ int main() {
 
     cout << fixed << setprecision(2);
 
-    cout << "\n--- COST ESTIMATE ---\n";
-    cout << "Material cost: RM " << materialCost << "\n";
-    cout << "Electricity cost: RM " << electricityCost << "\n";
-    cout << "Machine allowance: RM " << machineCost << "\n";
-    cout << "Estimated total: RM " << totalCost << "\n";
+    cout << "\n====================================\n";
+    cout << "          COST ESTIMATE\n";
+    cout << "====================================\n";
+
+    cout << "Material:           " << material << "\n";
+    cout << "Quality:            " << quality << "\n";
+    cout << "Weight:             " << weight << " g\n";
+    cout << "Infill:             " << infill << "%\n";
+    cout << "Print time:         " << printHours << " hours\n";
+
+    cout << "------------------------------------\n";
+
+    cout << "Material cost:      RM " << materialCost << "\n";
+    cout << "Electricity cost:   RM " << electricityCost << "\n";
+    cout << "Machine allowance:  RM " << machineCost << "\n";
+
+    cout << "------------------------------------\n";
+
+    cout << "Estimated total:    RM " << totalCost << "\n";
+
+    cout << "====================================\n";
 
     return 0;
 }
