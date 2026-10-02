@@ -13,6 +13,7 @@ int main() {
 
     cout << "Material (PLA/PETG/ABS): ";
     cin >> material;
+
     transform(material.begin(), material.end(), material.begin(), ::toupper);
 
     if (material == "PLA")
@@ -37,19 +38,41 @@ int main() {
 
     cout << "Quality (Draft/Standard/High): ";
     cin >> quality;
+
     transform(quality.begin(), quality.end(), quality.begin(), ::toupper);
 
+    double qualityRate;
+
+    if (quality == "DRAFT")
+        qualityRate = 0.50;
+    else if (quality == "STANDARD")
+        qualityRate = 1.00;
+    else if (quality == "HIGH")
+        qualityRate = 1.50;
+    else {
+        cout << "Invalid quality.\n";
+        return 1;
+    }
+
+    // Material cost
     double materialCost = (weight / 1000.0) * materialPricePerKg;
+
+    // Electricity cost
     double electricityCost = 0.12 * printHours * 0.57;
-    double machineCost = 0.50 * printHours;
-    double totalCost =
-    materialCost + electricityCost + machineCost;
+
+    // Machine allowance
+    double machineCost = 0.50 * printHours * qualityRate;
+
+    // Total cost
+    double totalCost = materialCost + electricityCost + machineCost;
 
     cout << fixed << setprecision(2);
+
     cout << "\n--- COST ESTIMATE ---\n";
     cout << "Material cost: RM " << materialCost << "\n";
     cout << "Electricity cost: RM " << electricityCost << "\n";
     cout << "Machine allowance: RM " << machineCost << "\n";
     cout << "Estimated total: RM " << totalCost << "\n";
+
     return 0;
 }
