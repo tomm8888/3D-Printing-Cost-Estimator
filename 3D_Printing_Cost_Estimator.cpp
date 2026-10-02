@@ -14,6 +14,7 @@ int main() {
     cout << "Material (PLA/PETG/ABS): ";
     cin >> material;
 
+    // Normalize material input
     transform(material.begin(), material.end(), material.begin(), ::toupper);
 
     if (material == "PLA")
@@ -72,38 +73,28 @@ int main() {
     // Material cost
     double materialCost = (weight / 1000.0) * materialPricePerKg;
 
-    // Electricity cost
+    // Electricity estimate: 0.12 kW average printer power
+    // Electricity rate used for the classroom estimator: RM0.57/kWh.
     double electricityCost = 0.12 * printHours * 0.57;
 
-    // Machine allowance
+    // Small machine/maintenance allowance, adjusted by quality.
     double machineCost = 0.50 * printHours * qualityRate;
 
-    // Total cost
-    double totalCost = materialCost + electricityCost + machineCost;
+    // Infill adjustment: higher infill generally consumes more material.
+    double infillFactor = 0.50 + (infill / 100.0);
+    double adjustedMaterialCost = materialCost * infillFactor;
+
+    double totalCost = adjustedMaterialCost + electricityCost + machineCost;
 
     cout << fixed << setprecision(2);
 
-    cout << "\n====================================\n";
-    cout << "          COST ESTIMATE\n";
-    cout << "====================================\n";
-
-    cout << "Material:           " << material << "\n";
-    cout << "Quality:            " << quality << "\n";
-    cout << "Weight:             " << weight << " g\n";
-    cout << "Infill:             " << infill << "%\n";
-    cout << "Print time:         " << printHours << " hours\n";
-
-    cout << "------------------------------------\n";
-
-    cout << "Material cost:      RM " << materialCost << "\n";
-    cout << "Electricity cost:   RM " << electricityCost << "\n";
-    cout << "Machine allowance:  RM " << machineCost << "\n";
-
-    cout << "------------------------------------\n";
-
-    cout << "Estimated total:    RM " << totalCost << "\n";
-
-    cout << "====================================\n";
+    cout << "\n--- ESTIMATE ---\n";
+    cout << "Material: " << material << "\n";
+    cout << "Quality: " << quality << "\n";
+    cout << "Material cost: RM " << adjustedMaterialCost << "\n";
+    cout << "Electricity cost: RM " << electricityCost << "\n";
+    cout << "Machine allowance: RM " << machineCost << "\n";
+    cout << "Estimated total: RM " << totalCost << "\n";
 
     return 0;
 }
