@@ -40,10 +40,16 @@ int main() {
     transform(quality.begin(), quality.end(), quality.begin(), ::toupper);
 
     double materialCost = (weight / 1000.0) * materialPricePerKg;
+    double electricityCost = 0.12 * printHours * 0.57;
+    double machineCost = 0.50 * printHours;
+    double totalCost =
+    materialCost + electricityCost + machineCost;
 
     cout << fixed << setprecision(2);
     cout << "\n--- COST ESTIMATE ---\n";
     cout << "Material cost: RM " << materialCost << "\n";
-
+    cout << "Electricity cost: RM " << electricityCost << "\n";
+    cout << "Machine allowance: RM " << machineCost << "\n";
+    cout << "Estimated total: RM " << totalCost << "\n";
     return 0;
 }
