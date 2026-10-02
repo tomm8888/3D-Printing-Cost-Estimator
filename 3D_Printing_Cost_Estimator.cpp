@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     string material;
-    double weight, infill;
+    double weight, infill, printHours;
 
     cout << "=== 3D PRINTING COST ESTIMATOR ===\n";
 
@@ -14,18 +14,20 @@ int main() {
 
     transform(material.begin(), material.end(), material.begin(), ::toupper);
 
-    cout << "Selected material: " << material << "\n";
-
     cout << "Filament weight (grams): ";
     cin >> weight;
 
     cout << "Infill percentage (0-100): ";
     cin >> infill;
 
+    cout << "Print time (hours): ";
+    cin >> printHours;
+
     cout << "\n--- INPUT SUMMARY ---\n";
     cout << "Material: " << material << "\n";
     cout << "Weight: " << weight << " g\n";
     cout << "Infill: " << infill << "%\n";
+    cout << "Print time: " << printHours << " hours\n";
 
     return 0;
 }
